@@ -1,54 +1,51 @@
 package com.university;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import com.university.model.cli.repository.CriteriaRepository;
+import com.university.model.cli.repository.StudentRepository;
+import com.university.model.cli.repository.EvaluationRepository;
+import com.university.model.criteria.Criteria;
+import com.university.service.CourseService;
+import com.university.service.EvaluationService;
+import com.university.service.StudentCourseService;
 
 public class App {
+    private static String coursesInputFilePath;
+    private static String examsInputFilePath;
+    private static String coursesOutputFilePath;
+    private static String examsOutputFilePath;
+
+    public App() {
+    }
+
     public static void main(String[] args) {
-        String inputFilePath = "input.csv"; // Path to the input CSV file
-        String outputFilePath = "solution.csv"; // Path to the output CSV file
-
-        try {
-            generateParsedCSV(inputFilePath, outputFilePath);
-            System.out.println("Parsed CSV generated successfully: " + outputFilePath);
-        } catch (IOException e) {
-            System.err.println("Error processing CSV files: " + e.getMessage());
-        }
+        coursesApp();
+        examsApp();
+        criteriaApp();
     }
 
-    public static void generateParsedCSV(String inputFilePath, String outputFilePath) throws IOException {
-        Map<String, Integer> studentCourseCount = new HashMap<>();
-
-        // Read the input CSV file
-        try (BufferedReader br = new BufferedReader(new FileReader(inputFilePath))) {
-            String line;
-            // Skip the header
-            br.readLine();
-
-            // Process each line
-            while ((line = br.readLine()) != null) {
-                String[] values = line.split(",");
-                if (values.length >= 3) {
-                    String studentName = values[2].trim(); // Get student name
-                    studentCourseCount.put(studentName, studentCourseCount.getOrDefault(studentName, 0) + 1);
-                }
-            }
-        }
-
-        // Write to the output CSV file
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputFilePath))) {
-            writer.write("Student_Name,Subject_Count"); // Write header
-            writer.newLine();
-
-            for (Map.Entry<String, Integer> entry : studentCourseCount.entrySet()) {
-                writer.write(entry.getKey() + "," + entry.getValue()); // Write student name and subject count
-                writer.newLine();
-            }
-        }
+    public static void coursesApp() {
+        System.out.println("Loading and parsing students...");
+        CourseService CourseUniversityService = new CourseService();
+        CourseUniversityService.loadAndParseStudents();// This loads and parses the students into the empty list
+        CourseUniversityService.sortStudents();
+        CourseUniversityService.writeStudentReport();// This writes the student report to the output CSV
     }
+
+    public static void examsApp() {
+        System.out.println("Loading and parsing exams...");
+        EvaluationService evaluationService = new EvaluationService();
+        evaluationService.loadAndParseEvaluations();// This loads and parses the students into the empty list
+        evaluationService.sortEvaluations();
+        evaluationService.writeEvaluationsReport();// This writes the student report to the output CSV
+    }
+    public static void criteriaApp() {
+        System.out.println("Loading and parsing criterias...");
+        StudentCourseService StudentCourseUniversityService = new StudentCourseService();
+        StudentCourseUniversityService.loadAndParseStudents();// This loads and parses the students into the empty list
+        StudentCourseUniversityService.sortStudents();
+        StudentCourseUniversityService.loadAndParseEvaluated();
+        StudentCourseUniversityService.writeStudentReport();// This writes the student report to the output CS
+    }
+
 }
+

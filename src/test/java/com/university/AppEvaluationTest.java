@@ -1,22 +1,23 @@
 package com.university;
 
 
+import org.junit.jupiter.api.Test;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-public class AppTest {
+public class AppEvaluationTest {
 
     @Test
     public void testSolutionCSVMatchesExpected() {
-        String solutionFilePath = "src/main/resources/reports/solution.csv";
-        String expectedFilePath = "src/main/resources/comparators/expected.csv";
+        String solutionFilePath = "src/main/resources/reports/solution_2.csv";
+        String expectedFilePath = "src/main/resources/comparators/expected_2.csv";
 
         // Check if solution.csv exists before running the test
         if (Files.exists(Paths.get(solutionFilePath))) {

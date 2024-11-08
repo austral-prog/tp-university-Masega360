@@ -1,4 +1,7 @@
-package com.university;
+package com.university.model.cli.repository;
+
+import com.university.model.cli.Entity;
+import com.university.model.student.Student;
 
 public interface CRUDRepository<T extends Entity> {
     /**
@@ -7,6 +10,7 @@ public interface CRUDRepository<T extends Entity> {
      * @param entity the entity to be created
      */
     void create(T entity);
+
 
     /**
      * Reads or retrieves an entity from the repository based on its ID.
@@ -40,4 +44,10 @@ public interface CRUDRepository<T extends Entity> {
     String getIdentifier();
 
     Class<T> getEntityClass();
+
+    T constructFromList();
+
+    void writeCSV();
+
+    void showByStudentName(String studentName);
 }

@@ -1,0 +1,3 @@
+com.university.model.cli.repository.EvaluationRepository
+com.university.model.cli.repository.CriteriaRepository
+com.university.model.cli.repository.StudentRepository
